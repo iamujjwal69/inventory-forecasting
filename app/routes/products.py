@@ -16,11 +16,11 @@ def get_current_user(token: str = Depends(oauth2_scheme)):
         raise HTTPException(status_code=401, detail="Invalid token")
     return payload
 
-@router.get("/", response_model=List[ProductResponse])
+@router.get("", response_model=List[ProductResponse])
 def list_products(db: Session = Depends(get_db), current_user=Depends(get_current_user)):
     return db.query(Product).all()
 
-@router.post("/", response_model=ProductResponse, status_code=201)
+@router.post("", response_model=ProductResponse, status_code=201)
 def create_product(product: ProductCreate, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
     if current_user.get("role") != "admin":
         raise HTTPException(status_code=403, detail="Only admins can create products")

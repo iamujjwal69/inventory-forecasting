@@ -17,6 +17,11 @@ async function fetchWithAuth(url, options = {}) {
         window.location.href = '/index.html';
         throw new Error('Unauthorized');
     }
+    if (!res.ok) {
+        let err;
+        try { err = await res.json(); } catch(e) { err = {}; }
+        throw new Error(err.detail || 'API Error');
+    }
     return res;
 }
 

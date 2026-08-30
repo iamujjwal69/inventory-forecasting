@@ -15,14 +15,18 @@ async function loadDashboard() {
 
         // Load first product forecast for chart
         if (products.length) {
-            const f = await getForecast(products[0].id, 7);
-            if (f && f.daily_forecast) {
-                const labels = f.daily_forecast.map(d => d.date);
-                const data = f.daily_forecast.map(d => d.demand);
-                new Chart(document.getElementById('forecastChart'), {
-                    type: 'line',
-                    data: { labels, datasets: [{ label: 'Forecast Demand', data }] }
-                });
+            try {
+                const f = await getForecast(products[0].id, 7);
+                if (f && f.daily_forecast) {
+                    const labels = f.daily_forecast.map(d => d.date);
+                    const data = f.daily_forecast.map(d => d.demand);
+                    new Chart(document.getElementById('forecastChart'), {
+                        type: 'line',
+                        data: { labels, datasets: [{ label: 'Forecast Demand', data }] }
+                    });
+                }
+            } catch (err) {
+                console.warn("Forecast for chart not available:", err.message);
             }
         }
         // Load sales trend (mock)
@@ -31,7 +35,12 @@ async function loadDashboard() {
         const tbody = document.querySelector('#recomTable tbody');
         tbody.innerHTML = '';
         for (const p of products) {
-            const f = await getForecast(p.id, 7);
+            let f = null;
+            try {
+                f = await getForecast(p.id, 7);
+            } catch (err) {
+                console.warn(`Forecast not available for product ${p.id}:`, err.message);
+            }
             const recom = f ? f.recommendation : { recommended_order: 0, status: 'N/A' };
             const tr = document.createElement('tr');
             tr.innerHTML = `<td>${p.name}</td><td>${p.current_stock}</td>
