@@ -1,36 +1,43 @@
 async function loadDashboard() {
     try {
         const products = await getProducts();
-        // Calculate stats
         let totalStock = 0, lowStock = 0, totalSales = 0;
         products.forEach(p => {
             totalStock += p.current_stock;
             if (p.current_stock < p.reorder_level) lowStock++;
-            // For sales, we'd need another API; we'll mock for now.
         });
+        
+        try {
+            const sales = await getSales();
+            const thirtyDaysAgo = new Date();
+            thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+            sales.forEach(s => {
+                if (new Date(s.sale_date) >= thirtyDaysAgo) {
+                    totalSales += (s.quantity * s.unit_price);
+                }
+            });
+            document.getElementById('totalSales').textContent = '$' + totalSales.toFixed(2);
+        } catch (e) {
+            console.warn("Could not fetch sales:", e);
+            document.getElementById('totalSales').textContent = 'Error';
+        }
+
         document.getElementById('totalProducts').textContent = products.length;
         document.getElementById('totalStock').textContent = totalStock;
         document.getElementById('lowStock').textContent = lowStock;
-        document.getElementById('totalSales').textContent = 'N/A';
 
-        // Load first product forecast for chart
-        if (products.length) {
-            try {
-                const f = await getForecast(products[0].id, 7);
-                if (f && f.daily_forecast) {
-                    const labels = f.daily_forecast.map(d => d.date);
-                    const data = f.daily_forecast.map(d => d.demand);
-                    new Chart(document.getElementById('forecastChart'), {
-                        type: 'line',
-                        data: { labels, datasets: [{ label: `Forecast Demand for ${products[0].name}`, data }] }
-                    });
-                }
-            } catch (err) {
-                console.warn("Forecast for chart not available:", err.message);
-            }
+        // Populate product dropdown
+        const select = document.getElementById('dashboardProductSelect');
+        products.forEach(p => {
+            const option = document.createElement('option');
+            option.value = p.id;
+            option.textContent = p.name;
+            select.appendChild(option);
+        });
+        
+        if (products.length > 0) {
+            await updateDashboardChart();
         }
-        // Load sales trend (mock)
-        // ...
         // Populate recommendation table
         const tbody = document.querySelector('#recomTable tbody');
         tbody.innerHTML = '';
@@ -51,6 +58,35 @@ async function loadDashboard() {
         }
     } catch (e) {
         console.error(e);
+    }
+}
+
+let dashboardChartInstance = null;
+
+async function updateDashboardChart() {
+    const select = document.getElementById('dashboardProductSelect');
+    const productId = select.value;
+    const productName = select.options[select.selectedIndex].text;
+    
+    if (!productId) return;
+    
+    try {
+        const f = await getForecast(productId, 7);
+        if (f && f.daily_forecast) {
+            const labels = f.daily_forecast.map(d => d.date);
+            const data = f.daily_forecast.map(d => d.demand);
+            
+            if (dashboardChartInstance) {
+                dashboardChartInstance.destroy();
+            }
+            
+            dashboardChartInstance = new Chart(document.getElementById('forecastChart'), {
+                type: 'line',
+                data: { labels, datasets: [{ label: `Forecast Demand for ${productName}`, data }] }
+            });
+        }
+    } catch (err) {
+        console.warn("Forecast for chart not available:", err.message);
     }
 }
 

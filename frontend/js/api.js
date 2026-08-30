@@ -34,3 +34,8 @@ async function getForecast(productId, days = 30) {
     const res = await fetchWithAuth(`${API_BASE}/forecast/${productId}?days=${days}`);
     return res.json();
 }
+
+async function getSales() {
+    const res = await fetchWithAuth(`${API_BASE}/sales`);
+    return res.json();
+}

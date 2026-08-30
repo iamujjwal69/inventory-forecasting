@@ -21,6 +21,12 @@
             <div class="card">Low Stock: <span id="lowStock">-</span></div>
             <div class="card">Total Sales (30d): <span id="totalSales">-</span></div>
         </div>
+        <div style="margin-bottom: 20px;">
+            <label for="dashboardProductSelect"><strong>Select Product for Forecast:</strong></label>
+            <select id="dashboardProductSelect" onchange="updateDashboardChart()">
+                <!-- Populated by JS -->
+            </select>
+        </div>
         <div style="display:flex; flex-wrap:wrap;">
             <div style="width:45%; margin:10px;"><canvas id="salesChart"></canvas></div>
             <div style="width:45%; margin:10px;"><canvas id="forecastChart"></canvas></div>

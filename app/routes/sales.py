@@ -7,6 +7,12 @@ from app.routes.products import get_current_user
 
 router = APIRouter(prefix="/api/sales", tags=["sales"])
 
+from typing import List
+
+@router.get("", response_model=List[SaleResponse])
+def list_sales(db: Session = Depends(get_db), current_user=Depends(get_current_user)):
+    return db.query(Sale).all()
+
 @router.post("", response_model=SaleResponse, status_code=201)
 def create_sale(sale_data: SaleCreate, db: Session = Depends(get_db), current_user=Depends(get_current_user)):
     product = db.query(Product).filter(Product.id == sale_data.product_id).first()
