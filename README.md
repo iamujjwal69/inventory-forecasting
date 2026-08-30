@@ -64,7 +64,7 @@ uvicorn app.main:app --reload
 The system will now be live at `http://localhost:8000`
 
 ### 4. Exploring the Platform
-- **Frontend Dashboard**: Open your browser and navigate to `http://localhost:8000`
+- **Frontend Dashboard**: Open your browser and navigate to `http://localhost:8000`. **Note:** You must first register a new account and log in before you can access the dashboard features!
 - **Interactive API Docs**: Navigate to `http://localhost:8000/docs` to test endpoints directly via Swagger UI.
 
 ## 🧪 Running Tests
