@@ -1,5 +1,7 @@
 # 🚀 AI-Based Inventory Demand Forecasting System
 
+**Live Demo:** [https://inventory-forecasting-rd59.onrender.com/dashboard.html](https://inventory-forecasting-rd59.onrender.com/dashboard.html)
+
 An end-to-end production-ready inventory management and demand forecasting system. This platform leverages Machine Learning (Random Forest) to analyze historical sales data, predict future inventory demand, and automatically recommend precise safety stock levels to prevent overstocking or stockouts.
 
 ## ✨ Key Features
