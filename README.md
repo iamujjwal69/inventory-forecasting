@@ -6,7 +6,7 @@ An end-to-end production-ready inventory management and demand forecasting syste
 - **🧠 AI Forecasting Engine**: Automated feature engineering (lags, rolling means, time-based features) and recursive multi-step forecasting for predicting the next 30 days of demand.
 - **🛡️ Secure RESTful API**: Built with FastAPI, utilizing JWT token-based authentication and Bcrypt password hashing.
 - **📊 Interactive Dashboard**: A frontend client utilizing Chart.js to visualize AI demand curves and real-time stock alerts.
-- **🤖 Smart Recommendations**: Calculates safety stock dynamically based on AI predictions and flags items as `STOCK_OK`, `LOW_STOCK`, `REORDER_REQUIRED`, or `OVERSTOCK`.
+- **🤖 Smart Recommendations**: Calculates safety stock dynamically based on AI predictions and flags items as `OUT_OF_STOCK`, `REORDER_REQUIRED`, `LOW_STOCK`, `IN_STOCK`, or `OVERSTOCKED`.
 - **🗃️ Persistent Audit Trail**: Automatically logs an `InventoryTransaction` for every sale to maintain a perfect historical record.
 
 ## 🛠️ Technology Stack
