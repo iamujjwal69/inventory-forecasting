@@ -22,7 +22,7 @@ async function loadDashboard() {
                     const data = f.daily_forecast.map(d => d.demand);
                     new Chart(document.getElementById('forecastChart'), {
                         type: 'line',
-                        data: { labels, datasets: [{ label: 'Forecast Demand', data }] }
+                        data: { labels, datasets: [{ label: `Forecast Demand for ${products[0].name}`, data }] }
                     });
                 }
             } catch (err) {
