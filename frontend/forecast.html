@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Forecast - Inventory Forecasting</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <nav>
+        <a href="/dashboard.html">Dashboard</a>
+        <a href="/products.html">Products</a>
+        <a href="/forecast.html" class="active">Forecast</a>
+        <a href="#" onclick="logout()">Logout</a>
+    </nav>
+    <div class="container">
+        <h1>Inventory Forecast</h1>
+        
+        <div style="margin-bottom: 20px;">
+            <label for="productSelect">Select Product:</label>
+            <select id="productSelect" onchange="loadProductForecast()">
+                <option value="">-- Select a Product --</option>
+            </select>
+        </div>
+
+        <div id="forecastContainer" style="display: none;">
+            <div style="display:flex; flex-wrap:wrap;">
+                <div style="width:100%; max-width:800px; margin:10px auto;">
+                    <canvas id="productForecastChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="summary-cards" style="margin-top: 20px;">
+                <div class="card">Predicted Demand (30d): <span id="predictedDemand">-</span></div>
+                <div class="card">Recommendation: <span id="recommendationStatus">-</span></div>
+                <div class="card">Suggested Order: <span id="suggestedOrder">-</span></div>
+            </div>
+        </div>
+        
+        <div id="errorContainer" style="color: red; display: none; margin-top: 20px;"></div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/forecast.js"></script>
+</body>
+</html>
