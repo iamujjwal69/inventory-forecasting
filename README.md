@@ -9,7 +9,7 @@ An end-to-end production-ready inventory management and demand forecasting syste
 - **🛡️ Secure RESTful API**: Built with FastAPI, utilizing JWT token-based authentication and Bcrypt password hashing.
 - **📊 Interactive Dashboard**: A frontend client utilizing Chart.js to visualize AI demand curves and real-time stock alerts.
 - **🤖 Smart Recommendations**: Calculates safety stock dynamically based on AI predictions and flags items as `OUT_OF_STOCK`, `REORDER_REQUIRED`, `LOW_STOCK`, `IN_STOCK`, or `OVERSTOCKED`.
-- **🗃️ Persistent Audit Trail**: Automatically logs an `InventoryTransaction` for every sale to maintain a perfect historical record.
+- **🗃️ Persistent Audit Trail**: Automatically logs an `InventoryTransaction` for every sale to maintain a perfect historical record.   
 
 ## 🛠️ Technology Stack
 - **Backend Framework**: FastAPI (Python)
